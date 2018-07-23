@@ -1,0 +1,25 @@
+version: '3.0'
+services:
+  selenium-hub:
+    image: selenium/hub
+    ports:
+    - 4444:4444
+
+  google-chrome:
+    image: selenium/node-chrome
+    depends_on:
+    - selenium-hub
+    environment:
+      HUB_HOST: selenium-hub
+      HUB_PORT: '4444'
+
+  selenium-tests:
+    image: test-testers/testing_app:latest
+    build: .
+    depends_on:
+    - google-chrome
+    environment:
+      BROWSER: chrome
+      SELENIUM_URL: http://selenium-hub:4444/wd/hub
+#    volumes:
+#    - ./allure-results-chrome:/jcat/allure-results:rw
