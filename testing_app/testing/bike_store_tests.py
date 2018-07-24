@@ -8,8 +8,8 @@ from selenium.webdriver.common.keys import Keys
 TEST_URL = "localhost:8000"
 JSON_URL = "https://raw.githubusercontent.com/rigagent/test-testers/master/app/bikes.json"
 # JSON_URL = "https://jujhar.com/bikes.json"
-GOOGLE_CHROME_PATH = "/usr/bin/google-chrome"
-CHROME_DRIVER_PATH = "./chromedriver"
+# GOOGLE_CHROME_PATH = "/usr/bin/google-chrome"
+# CHROME_DRIVER_PATH = "./chromedriver"
 
 
 class BikeStoreTests(unittest.TestCase):
@@ -22,6 +22,7 @@ class BikeStoreTests(unittest.TestCase):
     options.add_argument("--ignore-certificate-errors")
     options.add_argument("--test-type")
     options.binary_location = GOOGLE_CHROME_PATH
+    self.driver = webdriver.Remote()
     self.driver = webdriver.Chrome(executable_path=CHROME_DRIVER_PATH, chrome_options=options)
     self.driver.get(TEST_URL)
     try:
