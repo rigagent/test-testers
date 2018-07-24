@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
 echo "===== Start deployment ====="
-cd test-testers/app
+cd /app/test-testers/app
 python -m SimpleHTTPServer
