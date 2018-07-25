@@ -1,5 +1,5 @@
 # to build docker image for application testing
-FROM ubuntu:latest
+FROM ubuntu:16.04
 
 WORKDIR /testing_app
 COPY . .

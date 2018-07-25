@@ -1,15 +1,14 @@
 import json
 import unittest
 import urllib2
-import time
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
+from selenium.webdriver import ChromeOptions
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
-TEST_URL = "localhost:8000"
+SELENIUM_WD_URL = "http://192.168.16.2:4444/wd/hub"
+TEST_URL = "http://192.168.16.4:8000"
 JSON_URL = "https://raw.githubusercontent.com/rigagent/test-testers/master/app/bikes.json"
 # JSON_URL = "https://jujhar.com/bikes.json"
-# GOOGLE_CHROME_PATH = "/usr/bin/google-chrome"
-# CHROME_DRIVER_PATH = "./chromedriver"
 
 
 class BikeStoreTests(unittest.TestCase):
@@ -17,22 +16,25 @@ class BikeStoreTests(unittest.TestCase):
   This test suite verifies the page of Bike Store site.
   '''
 
+  @classmethod
+  def setUpClass(cls):
+    options = ChromeOptions()
+    desired_capabilities = options.to_capabilities()
+    # desired_capabilities["platform"] = "Linux"
+    cls.driver = webdriver.Remote(command_executor=SELENIUM_WD_URL,
+                                  desired_capabilities=desired_capabilities)
+
+  @classmethod
+  def tearDownClass(cls):
+    cls.driver.close()
+
   def setUp(self):
-    options = webdriver.ChromeOptions()
-    options.add_argument("--ignore-certificate-errors")
-    options.add_argument("--test-type")
-    options.binary_location = GOOGLE_CHROME_PATH
-    self.driver = webdriver.Remote()
-    self.driver = webdriver.Chrome(executable_path=CHROME_DRIVER_PATH, chrome_options=options)
     self.driver.get(TEST_URL)
     try:
       response = urllib2.urlopen(JSON_URL)
       self.bikes_dict = json.loads(response.read())
     except urllib2.HTTPError, e:
       print e.fp.read()
-
-  def tearDown(self):
-    self.driver.close()
 
   @property
   def _grid_content(self):
