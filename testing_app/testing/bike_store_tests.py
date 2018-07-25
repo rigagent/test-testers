@@ -5,8 +5,8 @@ from selenium import webdriver
 from selenium.webdriver import ChromeOptions
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
-SELENIUM_WD_URL = "http://192.168.16.2:4444/wd/hub"
-TEST_URL = "http://192.168.16.4:8000"
+SELENIUM_WD_URL = "http://selenium-hub:4444/wd/hub"
+TEST_URL = "http://application-deployment:8000"
 JSON_URL = "https://raw.githubusercontent.com/rigagent/test-testers/master/app/bikes.json"
 # JSON_URL = "https://jujhar.com/bikes.json"
 
@@ -20,7 +20,6 @@ class BikeStoreTests(unittest.TestCase):
   def setUpClass(cls):
     options = ChromeOptions()
     desired_capabilities = options.to_capabilities()
-    # desired_capabilities["platform"] = "Linux"
     cls.driver = webdriver.Remote(command_executor=SELENIUM_WD_URL,
                                   desired_capabilities=desired_capabilities)
 

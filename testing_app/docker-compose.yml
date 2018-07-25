@@ -29,6 +29,3 @@ services:
     build: ./testing
     depends_on:
       - application-deployment
-    environment:
-      BROWSER: chrome
-#      SELENIUM_URL: http://selenium-hub:4444/wd/hub
